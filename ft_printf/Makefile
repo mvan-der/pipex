@@ -6,12 +6,12 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/06 13:44:38 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/03/17 14:12:23 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/12 11:41:00 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-HEADERS = ft_printf.h
+HEADER = ft_printf.h
 CFLAGS = -Wall -Wextra -Werror
 LIBFT = ./libft/libft.a
 
