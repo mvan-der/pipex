@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/13 19:16:50 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/01/27 10:59:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/13 12:29:36 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 
 int		ft_printf(const char *inputstrings, ...);
 

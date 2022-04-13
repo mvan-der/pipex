@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_itoa_printf.c                                   :+:    :+:            */
+/*   ft_utoa_printf.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/10 13:08:15 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/09 10:54:07 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/13 12:28:47 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
 
-static int	ft_size_n(long int nb, int base)
+static int	ft_size_n(unsigned long int nb, int base)
 {
 	size_t	count;
 
 	count = 0;
-	if (nb < 0)
-		count++;
+	if (nb == 0)
+	{
+		count = 1;
+		return (count);
+	}
 	while (nb != 0)
 	{
 		nb = nb / base;
@@ -27,21 +30,16 @@ static int	ft_size_n(long int nb, int base)
 	return (count);
 }
 
-static char	*ft_itoa_conv(long int nb, int base)
+static char	*ft_utoa_conv_lower(unsigned long int nb, int base)
 {
-	char	*result;
-	size_t	i;
-	int		mod;
+	char				*result;
+	unsigned long int	i;
+	int					mod;
 
 	i = ft_size_n(nb, base) - 1;
 	result = ft_calloc(sizeof(char), ft_size_n(nb, base) + 1);
 	if (!result)
 		return (NULL);
-	if (nb < 0)
-	{
-		nb = nb * -1;
-		result[0] = '-';
-	}
 	while (nb != 0)
 	{
 		mod = nb % base;
@@ -55,12 +53,33 @@ static char	*ft_itoa_conv(long int nb, int base)
 	return (result);
 }
 
-char	*ft_itoa_printf(long int n, int base)
+static char	*ft_utoa_conv_upper(unsigned long int nb, int base)
 {
-	char		*str;
-	long int	nb;
+	char				*result;
+	unsigned long int	i;
+	int					mod;
 
-	nb = n;
+	i = ft_size_n(nb, base) - 1;
+	result = ft_calloc(sizeof(char), ft_size_n(nb, base) + 1);
+	if (!result)
+		return (NULL);
+	while (nb != 0)
+	{
+		mod = nb % base;
+		if (mod > 9)
+			result[i] = (mod - 10) + 'A';
+		else
+			result[i] = mod + '0';
+		nb = nb / base;
+		i--;
+	}
+	return (result);
+}
+
+char	*ft_utoa_printf(unsigned long int n, int base, char c)
+{
+	char				*str;
+
 	if (n == 0)
 	{
 		str = (char *)ft_calloc(sizeof(char), 2);
@@ -69,6 +88,9 @@ char	*ft_itoa_printf(long int n, int base)
 		str[0] = '0';
 		return (str);
 	}
-	str = ft_itoa_conv(nb, base);
+	if (c == 'x')
+		str = ft_utoa_conv_lower(n, base);
+	else
+		str = ft_utoa_conv_upper(n, base);
 	return (str);
 }
