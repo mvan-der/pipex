@@ -1,41 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_memmove.c                                       :+:    :+:            */
+/*   ft_strjoin.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/03 15:01:27 by mvan-der      #+#    #+#                 */
-/*   Updated: 2020/11/14 15:02:22 by mvan-der      ########   odam.nl         */
+/*   Created: 2020/11/07 12:39:57 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/17 18:50:50 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
+#include <stdlib.h>
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		*dptr;
-	const char	*sptr;
-	char		*enddest;
-	const char	*endsrc;
+	char	*newstr;
+	size_t	i;
+	size_t	j;
 
-	dptr = dest;
-	sptr = src;
-	enddest = dptr + (n - 1);
-	endsrc = sptr + (n - 1);
-	if (dptr == NULL && sptr == NULL)
+	if (!s1 || !s2)
 		return (0);
-	if (enddest < endsrc)
+	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (0);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
 	{
-		ft_memcpy(dest, src, n);
-		return (dest);
+		newstr[j] = s1[i];
+		i++;
+		j++;
 	}
-	while (n)
+	i = 0;
+	while (s2[i] != '\0')
 	{
-		*enddest = *endsrc;
-		enddest--;
-		endsrc--;
-		n--;
+		newstr[j] = s2[i];
+		i++;
+		j++;
 	}
-	return (dest);
+	return (newstr);
 }

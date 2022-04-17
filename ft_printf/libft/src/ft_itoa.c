@@ -6,11 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/12 14:20:39 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 16:15:37 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/17 18:42:20 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 #include <stddef.h>
 
 static int	ft_count_n(long int nb)

@@ -6,12 +6,12 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/06 13:44:38 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/01/26 14:03:04 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/17 18:41:34 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-HEADER = libft.h
+HEADER = includes/libft.h
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
@@ -22,18 +22,21 @@ ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
 ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c \
 ft_toupper.c
 
-SRCOBJ = $(SRCS:.c=.o)
+SRCDIR = src/
+OBJDIR = obj/
+SRCOBJ = $(SRCS:%.c=$(OBJDIR)%.o)
 
 all: $(NAME)
 
 $(NAME): $(SRCOBJ)
 	ar crs $(NAME) $(SRCOBJ)
 
-%.o : %.c $(HEADER)
+$(OBJDIR)%.o : $(SRCDIR)%.c $(HEADER)
+	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f $(SRCOBJ)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)

@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   ft_strlcat.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/13 14:14:48 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/01/26 14:03:28 by mvan-der      ########   odam.nl         */
+/*   Created: 2020/09/02 10:44:15 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/17 18:50:59 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "../includes/libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	size_t	destlen;
+	size_t	i;
+
+	i = 0;
+	destlen = ft_strlen(dest);
+	if (size > destlen)
+	{
+		while (src[i] != '\0' && i < (size - destlen - 1))
+		{
+			dest[destlen + i] = src[i];
+			i++;
+		}
+		dest[destlen + i] = '\0';
+		return (destlen + ft_strlen(src));
+	}
+	return (size + ft_strlen(src));
 }

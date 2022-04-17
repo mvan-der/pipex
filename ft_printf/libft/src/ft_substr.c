@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strtrim.c                                       :+:    :+:            */
+/*   ft_substr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/07 13:05:27 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/01/26 14:03:56 by mvan-der      ########   odam.nl         */
+/*   Created: 2020/11/05 10:56:02 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/17 18:54:02 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
+#include <stdlib.h>
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	char			*trimstr;
-	unsigned int	i;
-	unsigned int	j;
+	char	*dest;
+	size_t	i;
+	size_t	check;
 
-	if (!s1 || !set)
+	if (!s)
+		return (0);
+	check = ft_strlen(s);
+	dest = malloc(sizeof(char) * len + 1);
+	if (dest == 0)
 		return (0);
 	i = 0;
-	while (i < ft_strlen(s1) && ft_strchr(set, s1[i]))
+	if (start > check)
+	{
+		dest[i] = '\0';
+		return (dest);
+	}
+	while (s[start] != '\0' && i < len)
+	{
+		dest[i] = s[start];
 		i++;
-	j = ft_strlen(s1);
-	while (j > i && ft_strchr(set, s1[j]))
-		j--;
-	trimstr = ft_substr(s1, i, (j - i + 1));
-	return (trimstr);
+		start++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

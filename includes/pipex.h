@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 15:19:04 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/13 12:33:48 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/17 17:24:46 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 
 # define EXIT_ERROR -1
+# define READ_FAILURE -1
 # include <unistd.h>
 # include "../ft_printf/includes/ft_printf.h"
 

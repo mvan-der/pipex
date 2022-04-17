@@ -6,11 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/07 16:18:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 16:53:41 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/17 18:43:46 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 #include <stdlib.h>
 
 static char	**ft_free(char **result)

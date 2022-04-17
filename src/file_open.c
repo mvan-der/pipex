@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 11:05:37 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/12 11:27:10 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/17 17:24:51 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	file_open(char *str, t_file1 *placeholder)
 		exit (EXIT_ERROR);
 	}
 	ret = read(fd, placeholder->file_str, ft_file_size(str));
+	if (ret < 0)
+		exit(READ_FAILURE);
 	close(fd);
 }

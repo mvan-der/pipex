@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   ft_strtrim.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/05 10:16:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2020/11/26 15:03:42 by mvan-der      ########   odam.nl         */
+/*   Created: 2020/11/07 13:05:27 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/17 18:53:19 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include "../includes/libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*dest;
-	size_t	i;
+	char			*trimstr;
+	unsigned int	i;
+	unsigned int	j;
 
-	dest = malloc(ft_strlen(s) + 1);
-	if (!dest)
+	if (!s1 || !set)
 		return (0);
 	i = 0;
-	while (s[i] != '\0')
-	{
-		dest[i] = s[i];
+	while (i < ft_strlen(s1) && ft_strchr(set, s1[i]))
 		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	j = ft_strlen(s1);
+	while (j > i && ft_strchr(set, s1[j]))
+		j--;
+	trimstr = ft_substr(s1, i, (j - i + 1));
+	return (trimstr);
 }

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strlcpy.c                                       :+:    :+:            */
+/*   ft_putendl_fd.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/26 17:09:00 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/01/31 00:58:06 by mvan-der      ########   odam.nl         */
+/*   Created: 2020/11/13 14:16:57 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/17 18:43:19 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stddef.h>
+#include "../includes/libft.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	i;
-
-	i = 0;
-	if (!src)
-		return (0);
-	if (size == 0)
-		return (ft_strlen(src));
-	while (src[i] != '\0' && i < (size - 1))
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (ft_strlen(src));
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
