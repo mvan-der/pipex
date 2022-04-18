@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 15:19:04 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/17 17:24:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/18 15:39:53 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct s_file1
 {
-	char	*file_str;
+	char	**file_str;
 }			t_file1;
 
 void	file_open(char *str, t_file1 *placeholder);

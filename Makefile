@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/16 16:32:49 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/12 13:19:55 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/18 12:38:36 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ RED			= \033[0;31m
 RST			= \033[0m
 END			= \e[0m
 
-all: $(NAME)
+all: $(NAME) 
 
 $(NAME): $(SRCOBJ) $(FTPRINTFLIB)
 	$(CC) $(SRCOBJ) -o $(NAME) $(FTPRINTFLIB)

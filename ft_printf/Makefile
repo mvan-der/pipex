@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/06 13:44:38 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/13 12:27:48 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/18 12:39:08 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCDIR = src/
 OBJDIR = obj/
 SRCOBJ = $(SRCS:%.c=$(OBJDIR)%.o)
 
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
 $(NAME): $(SRCOBJ) $(LIBFT)
 	cp $(LIBFT) $(NAME)
