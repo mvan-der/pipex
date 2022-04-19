@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/16 16:32:49 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/18 12:38:36 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/19 14:46:28 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FTPRINTFLIB = $(FTPRINTFDIR)libftprintf.a
 
 SRCDIR = src/
 OBJDIR = obj/
-SRC = pipex.c file_open.c
+SRC = pipex.c paths.c input_check.c
 
 SRCOBJ = $(SRC:%.c=$(OBJDIR)%.o)
 
