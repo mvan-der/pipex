@@ -6,14 +6,14 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 15:19:04 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/19 14:46:14 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/19 16:22:07 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX
-# define PIPEX
+#ifndef PIPEX_H
+# define PIPEX_H
 
-# define ARG_ERROR "Not enough arguments given, expected format -> program file1 cmd1 cmd2 file2 \n"
+# define ARG_ERROR "Error\nExpected format -> program file1 cmd1 cmd2 file2\n"
 # define PATH_ERROR1 "Danger, Will Robinson\n"
 # define PATH_ERROR2 "So much more danger\n"
 # define OPEN_ERROR -1

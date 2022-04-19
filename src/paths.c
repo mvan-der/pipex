@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 13:14:46 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/19 14:29:43 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/19 16:28:34 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*env_path(char **envp)
 	while (*envp)
 	{
 		if (!ft_strncmp(*envp, "PATH", 4))
-			return(*envp + 5);
+			return (*envp + 5);
 		envp++;
 	}
 	return (PATH_ERROR1);
@@ -39,20 +39,20 @@ static char	*env_path(char **envp)
 char	*pathfinder(t_file *pipex, char **envp)
 {
 	char	**paths;
-	char	*binPath;
+	char	*binpath;
 
 	paths = ft_split(env_path(envp), ':');
-	if (*paths == PATH_ERROR1 || !paths) // hmm.. this might not work as I intend it to do 
+	if (*paths == PATH_ERROR1 || !paths)
 	{
 		ft_free_array(paths);
 		return (PATH_ERROR2);
 	}
-	while(*paths)
+	while (*paths)
 	{
-		binPath = ft_strjoin(*paths, "/");
-		binPath = ft_strjoin(binPath, pipex->command1[0]);
-		if (access(binPath, F_OK) == 0)
-			return (binPath);
+		binpath = ft_strjoin(*paths, "/");
+		binpath = ft_strjoin(binpath, pipex->command1[0]);
+		if (access(binpath, F_OK) == 0)
+			return (binpath);
 		paths++;
 	}
 	return (PATH_ERROR2);
