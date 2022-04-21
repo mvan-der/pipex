@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/16 16:32:49 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/19 14:46:28 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/21 17:27:26 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,15 @@ HEADER = includes/pipex.h
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -g -fsanitize=address
 
 FTPRINTFDIR = ./ft_printf/
 FTPRINTFLIB = $(FTPRINTFDIR)libftprintf.a
 
 SRCDIR = src/
 OBJDIR = obj/
-SRC = pipex.c paths.c input_check.c
+# SRC = pipex.c paths.c input_check.c
+SRC = pipex.c paths.c file_handling.c error.c commands.c
 
 SRCOBJ = $(SRC:%.c=$(OBJDIR)%.o)
 
@@ -34,8 +36,8 @@ END			= \e[0m
 
 all: $(NAME) 
 
-$(NAME): $(SRCOBJ) $(FTPRINTFLIB)
-	$(CC) $(SRCOBJ) -o $(NAME) $(FTPRINTFLIB)
+$(NAME): $(FTPRINTFLIB) $(SRCOBJ)
+	$(CC) $(CFLAGS) $(SRCOBJ) -o $(NAME) $(FTPRINTFLIB)
 	@echo "${GRN}[$(NAME)]${RST} done"
 
 $(OBJDIR)%.o: $(SRCDIR)%.c

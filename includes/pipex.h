@@ -5,28 +5,32 @@
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/11 15:19:04 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/19 16:22:07 by mvan-der      ########   odam.nl         */
+/*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/21 17:22:36 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# define ARG_ERROR "Error\nExpected format -> program file1 cmd1 cmd2 file2\n"
-# define PATH_ERROR1 "Danger, Will Robinson\n"
-# define PATH_ERROR2 "So much more danger\n"
-# define OPEN_ERROR -1
-# define READ_FAILURE -1
-# include <unistd.h>
 # include "../ft_printf/includes/ft_printf.h"
+# include <sys/types.h>
 
-typedef struct s_file
+typedef struct s_pipex
 {
-	char	**command1;
-}			t_file;
+	int		pipefd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	char	**path;
+	int		infile;
+	int		outfile;
+}	t_pipex;
 
-char	*pathfinder(t_file *pipex, char **envp);
-int		input_check(int argc, char **argv, t_file *pipex);
+void	pathfinder(t_pipex *pipex, char **envp);
+char	*pathjoin(t_pipex *pipex, char *command);
+int		file_open(t_pipex *pipex, int argc, char **argv);
+void	command_one(t_pipex *pipex, char **argv);
+void	command_two(t_pipex *pipex, char **argv);
+int		error_message(char *str);
 
 #endif

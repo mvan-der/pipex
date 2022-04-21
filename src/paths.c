@@ -5,12 +5,13 @@
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/19 13:14:46 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/19 16:28:34 by mvan-der      ########   odam.nl         */
+/*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/21 17:31:10 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include <unistd.h>
 
 static void	ft_free_array(char **result)
 {
@@ -33,27 +34,30 @@ static char	*env_path(char **envp)
 			return (*envp + 5);
 		envp++;
 	}
-	return (PATH_ERROR1);
+	return (NULL);
 }
 
-char	*pathfinder(t_file *pipex, char **envp)
+void	pathfinder(t_pipex *pipex, char **envp)
 {
-	char	**paths;
-	char	*binpath;
-
-	paths = ft_split(env_path(envp), ':');
-	if (*paths == PATH_ERROR1 || !paths)
+	pipex->path = ft_split(env_path(envp), ':');
+	// pipex->path = NULL;
+	if (!pipex->path)
 	{
-		ft_free_array(paths);
-		return (PATH_ERROR2);
+		ft_free_array(pipex->path);
+		exit (0);
 	}
-	while (*paths)
+}
+
+char	*pathjoin(t_pipex *pipex, char *command)
+{
+	char	*binpath;
+	while (*pipex->path)
 	{
-		binpath = ft_strjoin(*paths, "/");
-		binpath = ft_strjoin(binpath, pipex->command1[0]);
+		binpath = ft_strjoin(*pipex->path, "/");
+		binpath = ft_strjoin(binpath, command);
 		if (access(binpath, F_OK) == 0)
 			return (binpath);
-		paths++;
+		pipex->path++;
 	}
-	return (PATH_ERROR2);
+	return (NULL);
 }

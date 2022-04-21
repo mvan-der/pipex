@@ -1,1 +1,13 @@
-       1
+LICENSE
+Makefile
+README.md
+Test1.txt
+Test2.txt
+a.out
+ft_printf
+includes
+notes.txt
+obj
+pipex
+src
+test.txt

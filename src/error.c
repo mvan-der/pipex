@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   input_check.c                                      :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/19 14:32:03 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/19 16:22:44 by mvan-der      ########   odam.nl         */
+/*   Created: 2022/04/21 14:14:43 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/04/21 15:22:21 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	input_check(int argc, char **argv, t_file *pipex)
+int	error_message(char *str)
 {
-	if (argc < 5)
-	{
-		ft_printf(ARG_ERROR);
-		return (-1);
-	}
-	else if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])))
-	{
-		pipex->command1 = ft_split(argv[2], ' ');
-		return (0);
-	}
-	else
-	{
-		ft_printf("HERE_DOC!!!!\n");
-		return (0);
-	}
+	ft_printf("%s\n", str);
+	return (1);
 }
