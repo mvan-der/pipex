@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/21 17:31:10 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/22 12:31:51 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char	*env_path(char **envp)
 void	pathfinder(t_pipex *pipex, char **envp)
 {
 	pipex->path = ft_split(env_path(envp), ':');
-	// pipex->path = NULL;
 	if (!pipex->path)
 	{
 		ft_free_array(pipex->path);
@@ -51,6 +50,7 @@ void	pathfinder(t_pipex *pipex, char **envp)
 char	*pathjoin(t_pipex *pipex, char *command)
 {
 	char	*binpath;
+
 	while (*pipex->path)
 	{
 		binpath = ft_strjoin(*pipex->path, "/");
