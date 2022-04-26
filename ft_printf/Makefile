@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/06 13:44:38 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/18 12:39:08 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/04/26 11:42:00 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ft_itoa_printf.c ft_utoa_printf.c
 
 SRCDIR = src/
 OBJDIR = obj/
-SRCOBJ = $(SRCS:%.c=$(OBJDIR)%.o)
+SRCOBJ = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
 all: $(NAME)
 
@@ -29,7 +29,7 @@ $(NAME): $(SRCOBJ) $(LIBFT)
 	ar crs $(NAME) $(SRCOBJ)
 
 $(OBJDIR)%.o : $(SRCDIR)%.c
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):

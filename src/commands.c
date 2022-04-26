@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/22 12:30:57 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 13:45:09 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	command_one(t_pipex *pipex, char **argv)
 		binpath = pathjoin(pipex, command[0]);
 		if (!binpath)
 		{
-			error_message("HELP!\n");
+			error_message("Path fail");
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -58,7 +58,7 @@ void	command_two(t_pipex *pipex, char **argv)
 		binpath = pathjoin(pipex, command[0]);
 		if (!binpath)
 		{
-			error_message("HELP!\n");
+			error_message("Path fail");
 			exit (EXIT_FAILURE);
 		}
 	}

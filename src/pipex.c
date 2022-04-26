@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/22 12:14:12 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 13:44:40 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc != 5)
-		exit (error_message("Argument fail"));
+	if (argc < 5)
+		exit (error_message("Not enough arguments given"));
 	pathfinder(&pipex, envp);
 	if (file_open(&pipex, argc, argv))
 		return (1);

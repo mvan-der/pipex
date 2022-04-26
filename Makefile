@@ -5,43 +5,40 @@
 #                                                      +:+                     #
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2021/12/16 16:32:49 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/04/21 17:27:26 by mvan-der      ########   odam.nl          #
+#    Created: 2022/04/26 11:48:58 by mvan-der      #+#    #+#                  #
+#    Updated: 2022/04/26 13:09:27 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+BLU = \033[0;34m
+GRN = \033[0;32m
+RED = \033[0;31m
+RST = \033[0m
+END = \e[0m
 
 NAME = pipex
 
 HEADER = includes/pipex.h
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
+
+SRCDIR = src/
+OBJDIR = obj/
+OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
+SRC = commands.c error.c file_handling.c paths.c pipex.c
 
 FTPRINTFDIR = ./ft_printf/
 FTPRINTFLIB = $(FTPRINTFDIR)libftprintf.a
 
-SRCDIR = src/
-OBJDIR = obj/
-# SRC = pipex.c paths.c input_check.c
-SRC = pipex.c paths.c file_handling.c error.c commands.c
+all: $(NAME)
 
-SRCOBJ = $(SRC:%.c=$(OBJDIR)%.o)
-
-BLU			= \033[0;34m
-GRN			= \033[0;32m
-RED			= \033[0;31m
-RST			= \033[0m
-END			= \e[0m
-
-all: $(NAME) 
-
-$(NAME): $(FTPRINTFLIB) $(SRCOBJ)
-	$(CC) $(CFLAGS) $(SRCOBJ) -o $(NAME) $(FTPRINTFLIB)
+$(NAME): $(OBJ) $(FTPRINTFLIB)
+	$(CC) $(CFLAGS) $(OBJ) $(FTPRINTFLIB) -o $(NAME)
 	@echo "${GRN}[$(NAME)]${RST} done"
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	mkdir -p $(dir $@)
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(FTPRINTFLIB):
@@ -59,4 +56,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all pipex ft_printf clean fclean re
+.PHONY: all pipex ft_printf clean flcean re
