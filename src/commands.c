@@ -6,14 +6,14 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 13:45:09 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 14:08:46 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 void	command_one(t_pipex *pipex, char **argv)
 {

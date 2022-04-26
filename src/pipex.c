@@ -6,11 +6,13 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 13:44:40 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 14:09:55 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int	main(int argc, char **argv, char **envp)
 {

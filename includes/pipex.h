@@ -6,14 +6,14 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 13:44:47 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 14:33:48 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "../ft_printf/includes/ft_printf.h"
+# include "../libft/includes/libft.h"
 # include <sys/types.h>
 
 typedef struct s_pipex

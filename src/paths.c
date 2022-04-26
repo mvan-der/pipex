@@ -6,11 +6,12 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/22 12:31:51 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/04/26 14:09:09 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include <stdlib.h>
 #include <unistd.h>
 
 static void	ft_free_array(char **result)
