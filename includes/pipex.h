@@ -6,15 +6,18 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/04 16:56:31 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/04 21:13:04 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# define ARGFAIL "Required usage: ./pipex infile cmd1 cmd2 outfile\n"
+
 # include "../libft/includes/libft.h"
 # include <sys/types.h>
+
 
 typedef struct s_pipex
 {
