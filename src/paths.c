@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 14:09:09 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/04 17:55:46 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*pathjoin(t_pipex *pipex, char *command)
 {
 	char	*binpath;
 
+	if (!command)
+		return (NULL);
 	while (*pipex->path)
 	{
 		binpath = ft_strjoin(*pipex->path, "/");

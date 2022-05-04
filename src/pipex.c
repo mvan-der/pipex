@@ -6,13 +6,14 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 14:09:55 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/04 17:58:58 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -29,14 +30,8 @@ int	main(int argc, char **argv, char **envp)
 	if (pipex.pid1 < 0)
 		return (error_message("Fork 1 fail"));
 	else if (pipex.pid1 == 0)
-		command_one(&pipex, argv);
-	pipex.pid2 = fork();
-	if (pipex.pid2 < 0)
-		return (error_message("Fork 2 fail"));
-	else if (pipex.pid2 == 0)
-		command_two(&pipex, argv);
-	close(pipex.pipefd[1]);
-	close(pipex.infile);
-	close(pipex.outfile);
+		first_command(&pipex, argv);
+	else
+		last_command(&pipex, argv);
 	return (0);
 }

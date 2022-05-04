@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/26 14:08:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/04 17:54:52 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	command_one(t_pipex *pipex, char **argv)
+void	first_command(t_pipex *pipex, char **argv)
 {
 	char	**command;
 	char	*binpath;
@@ -31,7 +31,7 @@ void	command_one(t_pipex *pipex, char **argv)
 		binpath = pathjoin(pipex, command[0]);
 		if (!binpath)
 		{
-			error_message("Path fail");
+			perror("Path fail");
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -40,7 +40,7 @@ void	command_one(t_pipex *pipex, char **argv)
 	exit (EXIT_FAILURE);
 }
 
-void	command_two(t_pipex *pipex, char **argv)
+void	last_command(t_pipex *pipex, char **argv)
 {
 	char	**command;
 	char	*binpath;
@@ -58,7 +58,7 @@ void	command_two(t_pipex *pipex, char **argv)
 		binpath = pathjoin(pipex, command[0]);
 		if (!binpath)
 		{
-			error_message("Path fail");
+			perror("Path fail");
 			exit (EXIT_FAILURE);
 		}
 	}
