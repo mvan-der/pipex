@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 14:11:40 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/05 21:10:08 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define ARG_FAIL "Required usage: ./pipex infile cmd1 cmd2 outfile\n"
 
 # include <sys/types.h>
-
+# include <sys/wait.h>
 
 typedef struct s_pipex
 {
