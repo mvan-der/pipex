@@ -6,11 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/07 16:18:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/04/17 18:43:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/05 13:36:38 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/pipex.h"
 #include <stdlib.h>
 
 static char	**ft_free(char **result)
@@ -63,7 +63,7 @@ static int	ft_len_str(const char *s, int i, char c)
 	return (len);
 }
 
-static void	ft_split_magic(char const *s, char c, char **result)
+static void	ft_make_string(char const *s, char c, char **result)
 {
 	size_t	i;
 
@@ -93,9 +93,9 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (0);
-	result = malloc(sizeof(char *) * (ft_cnt_str(s, c) + 1));
+	result = ft_calloc(sizeof(char *), (ft_cnt_str(s, c) + 1));
 	if (!result)
 		return (0);
-	ft_split_magic(s, c, result);
+	ft_make_string(s, c, result);
 	return (result);
 }

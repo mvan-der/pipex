@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/26 11:48:58 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/05/04 14:10:44 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/05/05 13:47:22 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,34 +26,28 @@ CFLAGS = -Wall -Werror -Wextra
 SRCDIR = src/
 OBJDIR = obj/
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-SRC = commands.c error.c file_handling.c paths.c pipex.c
-
-LIBFTDIR = libft/
-LIBFTLIB = $(LIBFTDIR)libft.a
+SRC = commands.c error.c file_handling.c gen_utils.c ft_split.c paths.c pipex.c 
 
 all: $(NAME)
+	@echo "${GRN}[Everything is up-to-date]${RST}"
 
-$(NAME): $(OBJ) $(LIBFTLIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFTLIB) -o $(NAME)
-	@echo "${GRN}[$(NAME)]${RST} done"
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "${GRN}[$(NAME)]${RST}"
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFTLIB):
-	$(MAKE) -C $(LIBFTDIR)
-	@echo "${GRN}[FT_PRINTF + LIBFT]${RST} done"
-
 clean:
 	rm -rf $(OBJDIR)
-	@echo "${GRN}[CLEAN]${RST} done"
+	@echo "${GRN}[CLEAN]${RST}"
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFTDIR) $@
-	@echo "${GRN}[FCLEAN]${RST} done"
+	@echo "${GRN}[FCLEAN]${RST}"
 
-re: fclean all
+re: fclean
+	$(MAKE)
 
-.PHONY: all pipex ft_printf clean flcean re
+.PHONY: all clean fclean re

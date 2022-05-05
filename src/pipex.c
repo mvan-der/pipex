@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/04 21:19:53 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/05 16:36:02 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,39 @@
 #include <unistd.h>
 #include <stdio.h>
 
+int	input_check(int argc)
+{
+	if (argc < 5)
+	{
+		write(1, ARG_FAIL, 50);
+		exit(EXIT_FAILURE);
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc < 5)
-	{
-		write(1, ARGFAIL, 50);
-		exit(0);
-	}
+	input_check(argc);
 	pathfinder(&pipex, envp);
-	if (file_open(&pipex, argc, argv))
-		return (1);
+	if (file_open(&pipex, argc, argv) == 1)
+		exit (EXIT_FAILURE);
 	if (pipe(pipex.pipefd) == -1)
 		return (error_message("Pipe fail"));
-	pipex.pid1 = fork();
-	if (pipex.pid1 < 0)
-		return (error_message("Fork 1 fail"));
-	else if (pipex.pid1 == 0)
+	pipex.pid = fork();
+	if (pipex.pid < 0)
+		return (error_message("Fork fail"));
+	else if (pipex.pid == 0)
+	{
+		dup2(pipex.infile, STDIN_FILENO);
 		first_command(&pipex, argv);
+	}
 	else
+	{
+		wait(NULL);
+		dup2(pipex.pipefd[0], STDIN_FILENO);
 		last_command(&pipex, argv);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/04 17:55:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/05 14:35:57 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	pathfinder(t_pipex *pipex, char **envp)
 	if (!pipex->path)
 	{
 		ft_free_array(pipex->path);
-		exit (0);
+		exit (EXIT_FAILURE);
 	}
 }
 
