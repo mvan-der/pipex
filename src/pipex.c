@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 16:36:02 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/05 17:50:28 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
+		close(pipex.pipefd[1]);
 		wait(NULL);
-		dup2(pipex.pipefd[0], STDIN_FILENO);
-		last_command(&pipex, argv);
 	}
+	dup2(pipex.pipefd[0], STDIN_FILENO);
+	last_command(&pipex, argv);
 	return (0);
 }
