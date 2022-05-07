@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/05 20:44:26 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 21:14:46 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/06 12:39:19 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-int	input_check(int argc)
+void	input_check(int argc)
 {
-	if (argc < 5)
+	if (argc < 4)
 	{
 		write(1, ARG_FAIL, 50);
 		exit(EXIT_FAILURE);
 	}
-	return (0);
 }
 
 void	command(t_pipex *pipex, char *argv)
@@ -32,6 +31,9 @@ void	command(t_pipex *pipex, char *argv)
 	char	*binpath;
 
 	command = ft_split(argv, ' ');
+	if (!command)
+		exit (999);
+	close(pipex->pipefd[0]);
 	dup2(pipex->pipefd[1], STDOUT_FILENO);
 	if (access(command[0], F_OK) == 0)
 		binpath = command[0];
@@ -40,8 +42,8 @@ void	command(t_pipex *pipex, char *argv)
 		binpath = pathjoin(pipex, command[0]);
 		if (!binpath)
 		{
-			perror("Path 1 fail");
-			exit (0);
+			perror("Path fail");
+			exit (EXIT_FAILURE);
 		}
 	}
 	execve(binpath, command, NULL);
@@ -53,18 +55,19 @@ void	forkception(t_pipex *pipex, char *argv)
 {
 	if (pipe(pipex->pipefd) == -1)
 		exit (error_message("Pipe fail"));
+	dup2(pipex->infile, STDIN_FILENO);
 	pipex->pid = fork();
 	if (pipex->pid < 0)
 		exit (error_message("Fork fail"));
 	else if (pipex->pid == 0)
 	{
-		dup2(pipex->infile, STDIN_FILENO);
 		command(pipex, argv);
 	}
 	else
 	{
 		close(pipex->pipefd[1]);
 		wait(NULL);
+		dup2(pipex->pipefd[0], pipex->infile);
 	}
 }
 
@@ -80,9 +83,10 @@ int	main(int argc, char **argv, char **envp)
 	pathfinder(&pipex, envp);
 	if (file_open(&pipex, argc, argv) == 1)
 		exit (EXIT_FAILURE);
-	while (i <= arg_counter)
+	while (i < arg_counter)
+	{
 		forkception(&pipex, argv[i++]);
-	dup2(pipex.pipefd[0], STDIN_FILENO);
-	last_command(&pipex, argv);
+	}
+	last_command(&pipex, argv[i]);
 	return (0);
 }

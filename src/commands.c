@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 16:40:01 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/07 14:54:54 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,40 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	first_command(t_pipex *pipex, char **argv)
+void	execute_command(t_pipex *pipex, char *argv)
 {
-	char	**command;
 	char	*binpath;
+	char	**command;
 
-	command = ft_split(argv[2], ' ');
-	dup2(pipex->pipefd[1], STDOUT_FILENO);
-	if (access(command[0], F_OK) == 0)
-		binpath = command[0];
-	else
-	{
-		binpath = pathjoin(pipex, command[0]);
-		if (!binpath)
-		{
-			perror("Path 1 fail");
-			exit (0);
-		}
-	}
+	command = ft_split(argv, ' ');
+	if (!command)
+		err_msg("Split fail");
+	binpath = path_finder(pipex, command[0]);
+	if (!binpath)
+		err_msg("Path fail");
 	execve(binpath, command, NULL);
-	perror("execve");
+	perror("execve 1");
+	free(binpath);
+	ft_free(command);
 	exit (EXIT_FAILURE);
 }
 
-void	last_command(t_pipex *pipex, char **argv)
+void	first_command(t_pipex *pipex, char *argv)
 {
-	char	**command;
-	char	*binpath;
+	close(pipex->pipefd[0]);
+	if (dup2(pipex->infile, STDIN_FILENO) == -1)
+		err_msg("Dup2 fail");
+	if (dup2(pipex->pipefd[1], STDOUT_FILENO) == -1)
+		err_msg("Dup2 fail");
+	execute_command(pipex, argv);
+}
 
-	command = ft_split(argv[3], ' ');
+void	second_command(t_pipex *pipex, char *argv)
+{
 	close(pipex->pipefd[1]);
-	dup2(pipex->outfile, STDOUT_FILENO);
-	if (access(command[0], F_OK) == 0)
-		binpath = command[0];
-	else
-	{
-		binpath = pathjoin(pipex, command[0]);
-		if (!binpath)
-		{
-			perror("Path 2 fail");
-			exit(EXIT_FAILURE);
-		}
-	}
-	execve(binpath, command, NULL);
-	perror("execve");
-	exit (EXIT_FAILURE);
+	if (dup2(pipex->pipefd[0], STDIN_FILENO) == -1)
+		err_msg("Dup2 fail");
+	if (dup2(pipex->outfile, STDOUT_FILENO) == -1)
+		err_msg("Dup2 fail");
+	execute_command(pipex, argv);
 }

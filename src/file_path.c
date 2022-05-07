@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   paths.c                                            :+:    :+:            */
+/*   file_handling.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/21 13:37:59 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 14:35:57 by mvan-der      ########   odam.nl         */
+/*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/05/07 15:07:31 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -27,7 +28,7 @@ static void	ft_free_array(char **result)
 	free(result);
 }
 
-static char	*env_path(char **envp)
+static char	*search_path(char **envp)
 {
 	while (*envp)
 	{
@@ -38,9 +39,15 @@ static char	*env_path(char **envp)
 	return (NULL);
 }
 
-void	pathfinder(t_pipex *pipex, char **envp)
+void	file_and_path(t_pipex *pipex, int argc, char **argv, char **envp)
 {
-	pipex->path = ft_split(env_path(envp), ':');
+	pipex->infile = open(argv[1], O_RDONLY);
+	if (pipex->infile < 0)
+		exit(err_msg("Infile open error"));
+	pipex->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (pipex->outfile < 0)
+		exit(err_msg("Outfile open error"));
+	pipex->path = ft_split(search_path(envp), ':');
 	if (!pipex->path)
 	{
 		ft_free_array(pipex->path);
@@ -48,19 +55,32 @@ void	pathfinder(t_pipex *pipex, char **envp)
 	}
 }
 
-char	*pathjoin(t_pipex *pipex, char *command)
+char	*path_finder(t_pipex *pipex, char *command)
 {
 	char	*binpath;
 
 	if (!command)
 		return (NULL);
+	if (access(command, X_OK) == 0)
+	{
+		binpath = command;
+		return (binpath);
+	}
 	while (*pipex->path)
 	{
 		binpath = ft_strjoin(*pipex->path, "/");
 		binpath = ft_strjoin(binpath, command);
-		if (access(binpath, F_OK) == 0)
+		if (access(binpath, X_OK) == 0)
 			return (binpath);
 		pipex->path++;
 	}
 	return (NULL);
+}
+
+void	fd_closer(t_pipex *pipex)
+{
+	close(pipex->pipefd[0]);
+	close(pipex->pipefd[1]);
+	close(pipex->infile);
+	close(pipex->outfile);
 }

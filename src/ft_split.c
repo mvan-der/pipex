@@ -6,14 +6,14 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/07 16:18:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 13:36:38 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/06 12:46:00 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 #include <stdlib.h>
 
-static char	**ft_free(char **result)
+char	**ft_free(char **result)
 {
 	int	i;
 

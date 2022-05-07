@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/26 11:48:58 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/05/05 21:03:26 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/05/07 15:20:43 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRCDIR = src/
 OBJDIR = obj/
-SRC = commands.c error.c file_handling.c gen_utils.c ft_split.c paths.c pipex.c 
-BONUS_SRC = commands.c error.c file_handling.c gen_utils.c ft_split.c paths.c pipex_bonus.c 
+SRC = commands.c file_path.c gen_utils.c ft_split.c pipex.c 
+BONUS_SRC = commands.c file_path.c gen_utils.c ft_split.c pipex_bonus.c 
 
 ifdef BONUS
 OBJ = $(addprefix $(OBJDIR), $(BONUS_SRC:.c=.o))
