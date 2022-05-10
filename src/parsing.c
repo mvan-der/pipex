@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   file_path.c                                        :+:    :+:            */
+/*   parsing.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 11:49:55 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/10 16:17:02 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	ft_free_array(char **result)
+void	wait_status(pid_t process)
 {
-	int	i;
+	int		status;
 
-	i = 0;
-	while (result[i])
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
+	waitpid(process, &status, 0);
+	if (WEXITSTATUS(status))
+		exit(WEXITSTATUS(status));
 }
 
 static char	*search_path(char **envp)
@@ -39,48 +34,41 @@ static char	*search_path(char **envp)
 	return (NULL);
 }
 
-void	file_and_path(t_pipex *pipex, int argc, char **argv, char **envp)
+void	env_path(t_pipex *pipex, char **envp)
 {
-	pipex->fin = open(argv[1], O_RDONLY);
-	if (pipex->fin < 0)
-		exit(err_msg("Infile open error"));
-	pipex->fout = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (pipex->fout < 0)
-		exit(err_msg("Outfile open error"));
 	pipex->path = ft_split(search_path(envp), ':');
 	if (!pipex->path)
-	{
-		ft_free_array(pipex->path);
 		exit (EXIT_FAILURE);
-	}
 }
 
 char	*path_finder(t_pipex *pipex, char *command)
 {
-	char	*binpath;
+	char	*temp;
 
 	if (!command)
 		return (NULL);
 	if (access(command, X_OK) == 0)
 	{
-		binpath = command;
-		return (binpath);
+		temp = command;
+		return (temp);
 	}
 	while (*pipex->path)
 	{
-		binpath = ft_strjoin(*pipex->path, "/");
-		binpath = ft_strjoin(binpath, command);
-		if (access(binpath, X_OK) == 0)
-			return (binpath);
+		temp = ft_strjoin(*pipex->path, "/");
+		temp = ft_strjoin(temp, command);
+		if (!temp)
+			err_msg("command fail", EXIT_FAILURE);
+		if (access(temp, X_OK) == 0)
+			return (temp);
 		pipex->path++;
 	}
 	return (NULL);
 }
 
-void	fd_closer(t_pipex *pipex)
+void	parents(t_pipex *pipex)
 {
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
-	close(pipex->fin);
-	close(pipex->fout);
+	wait_status(pipex->first);
+	wait_status(pipex->second);
 }

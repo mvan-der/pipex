@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 11:39:22 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/10 16:14:44 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	wait_status(pid_t process)
-{
-	int		status;
-
-	waitpid(process, &status, 0);
-	if (WEXITSTATUS(status))
-		exit(WEXITSTATUS(status));
-}
-
-int	err_msg(char *str)
+int	err_msg(char *str, int exit_code)
 {
 	perror(str);
-	exit (EXIT_FAILURE);
+	exit (exit_code);
 }
 
 void	input_check(int argc)
 {
-	if (argc < 5)
+	if (argc != 5)
 	{
 		write(1, ARG_FAIL, 50);
 		exit(EXIT_FAILURE);
@@ -44,21 +35,19 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 
 	input_check(argc);
-	file_and_path(&pipex, argc, argv, envp);
+	env_path(&pipex, envp);
 	if (pipe(pipex.pipefd) == -1)
-		return (err_msg("Pipe fail"));
+		return (err_msg("Pipe fail", EXIT_FAILURE));
 	pipex.first = fork();
 	if (pipex.first < 0)
-		return (err_msg("Fork fail"));
+		return (err_msg("Fork fail", EXIT_FAILURE));
 	if (pipex.first == 0)
-		first_command(&pipex, argv[2]);
+		first_command(&pipex, argv[1], argv[2]);
 	pipex.second = fork();
 	if (pipex.second < 0)
-		return (err_msg("Fork fail"));
+		return (err_msg("Fork fail", EXIT_FAILURE));
 	if (pipex.second == 0)
-		second_command(&pipex, argv[3]);
-	fd_closer(&pipex);
-	wait_status(pipex.first);
-	wait_status(pipex.second);
+		second_command(&pipex, argv[3], argv[4]);
+	parents(&pipex);
 	return (0);
 }

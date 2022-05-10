@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 11:51:57 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/10 16:15:47 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ typedef struct s_pipex
 	int			fout;
 }	t_pipex;
 
-void	file_and_path(t_pipex *pipex, int argc, char **argv, char **envp);
+void	env_path(t_pipex *pipex, char **envp);
 char	*path_finder(t_pipex *pipex, char *command);
-void	fd_closer(t_pipex *pipex);
+void	parents(t_pipex *pipex);
 
-int		err_msg(char *str);
+int		err_msg(char *str, int exit_code);
 
-void	first_command(t_pipex *pipex, char *argv);
-void	second_command(t_pipex *pipex, char *argv);
+void	first_command(t_pipex *pipex, char *file, char *argv);
+void	second_command(t_pipex *pipex, char *argv, char *file);
 void	execute_command(t_pipex *pipex, char *argv);
 
 char	**ft_split(char const *s, char c);
