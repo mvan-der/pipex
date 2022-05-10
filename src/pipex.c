@@ -5,61 +5,63 @@
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/07 15:20:27 by mvan-der      ########   odam.nl         */
+/*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
+/*   Updated: 2022/05/10 12:46:39 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
 
-void	wait_status(pid_t process)
+static void	ft_free_array(char **result)
 {
-	int		status;
+	int	i;
 
-	waitpid(process, &status, 0);
-	if (WEXITSTATUS(status))
-		exit(WEXITSTATUS(status));
-}
-
-int	err_msg(char *str)
-{
-	perror(str);
-	exit (EXIT_FAILURE);
-}
-
-int	input_check(int argc)
-{
-	if (argc < 5)
+	i = 0;
+	while (result[i])
 	{
-		write(1, ARG_FAIL, 50);
-		exit(EXIT_FAILURE);
+		free(result[i]);
+		i++;
 	}
-	return (0);
+	free(result);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	execute_command(t_pipex *pipex, char *argv)
 {
-	t_pipex	pipex;
+	char	*binpath;
+	char	**command;
 
-	input_check(argc);
-	file_and_path(&pipex, argc, argv, envp);
-	if (pipe(pipex.pipefd) == -1)
-		return (err_msg("Pipe fail"));
-	pipex.first = fork();
-	if (pipex.first < 0)
-		return (err_msg("Fork fail"));
-	if (pipex.first == 0)
-		first_command(&pipex, argv[2]);
-	pipex.second = fork();
-	if (pipex.second < 0)
-		return (err_msg("Fork fail"));
-	if (pipex.second == 0)
-		second_command(&pipex, argv[3]);
-	fd_closer(&pipex);
-	wait_status(pipex.first);
-	wait_status(pipex.second);
-	return (0);
+	command = ft_split(argv, ' ');
+	if (!command)
+		err_msg("Split fail");
+	binpath = path_finder(pipex, command[0]);
+	if (!binpath)
+		err_msg("Path fail");
+	execve(binpath, command, NULL);
+	perror("execve");
+	free(binpath);
+	ft_free_array(command);
+	exit(EXIT_FAILURE);
+}
+
+void	first_command(t_pipex *pipex, char *argv)
+{
+	close(pipex->pipefd[0]);
+	if (dup2(pipex->fin, STDIN_FILENO) == -1)
+		err_msg("Dup2 stdin fail");
+	if (dup2(pipex->pipefd[1], STDOUT_FILENO) == -1)
+		err_msg("Dup2 stdout fail");
+	execute_command(pipex, argv);
+}
+
+void	second_command(t_pipex *pipex, char *argv)
+{
+	close(pipex->pipefd[1]);
+	if (dup2(pipex->pipefd[0], STDIN_FILENO) == -1)
+		err_msg("Dup2 stdin fail 2");
+	if (dup2(pipex->fout, STDOUT_FILENO) == -1)
+		err_msg("Dup2 stdout fail 2");
+	execute_command(pipex, argv);
 }

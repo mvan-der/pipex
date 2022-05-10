@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/26 11:48:58 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/05/07 15:20:43 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/05/10 11:31:38 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,15 @@ END = \e[0m
 
 NAME = pipex
 
-HEADER = includes/pipex.h
+HEADER = pipex.h
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -I includes
 
 SRCDIR = src/
 OBJDIR = obj/
-SRC = commands.c file_path.c gen_utils.c ft_split.c pipex.c 
-BONUS_SRC = commands.c file_path.c gen_utils.c ft_split.c pipex_bonus.c 
-
-ifdef BONUS
-OBJ = $(addprefix $(OBJDIR), $(BONUS_SRC:.c=.o))
-else
+SRC = file_path.c gen_utils.c ft_split.c main.c pipex.c
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-endif
 
 all: $(NAME)
 	@echo "${GRN}[Everything is up-to-date]${RST}"
@@ -41,12 +35,9 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "${GRN}[$(NAME)]${RST}"
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)
+$(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-
-bonus:
-	$(MAKE) BONUS=1 all
 
 clean:
 	rm -rf $(OBJDIR)

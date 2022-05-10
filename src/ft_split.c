@@ -6,14 +6,15 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/07 16:18:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/06 12:46:00 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/10 12:50:10 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-char	**ft_free(char **result)
+static char	**ft_free(char **result)
 {
 	int	i;
 
@@ -31,26 +32,22 @@ static int	ft_cnt_str(const char *s, char c)
 {
 	size_t	i;
 	size_t	count;
-	int		checkflag;
 
 	i = 0;
-	count = 0;
-	checkflag = 0;
+	count = 1;
 	while (s[i])
 	{
 		if (s[i] == c)
-			checkflag = 0;
-		else if (checkflag == 0)
 		{
-			checkflag = 1;
-			count++;
+			if (s[i + 1] != c)
+				count++;
 		}
 		i++;
 	}
 	return (count);
 }
 
-static int	ft_len_str(const char *s, int i, char c)
+static size_t	ft_len_str(const char *s, size_t i, char c)
 {
 	size_t	len;
 
@@ -95,7 +92,7 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	result = ft_calloc(sizeof(char *), (ft_cnt_str(s, c) + 1));
 	if (!result)
-		return (0);
+		return (NULL);
 	ft_make_string(s, c, result);
 	return (result);
 }

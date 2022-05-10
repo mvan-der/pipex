@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   file_handling.c                                    :+:    :+:            */
+/*   file_path.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/07 15:07:31 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/10 11:49:55 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -41,11 +41,11 @@ static char	*search_path(char **envp)
 
 void	file_and_path(t_pipex *pipex, int argc, char **argv, char **envp)
 {
-	pipex->infile = open(argv[1], O_RDONLY);
-	if (pipex->infile < 0)
+	pipex->fin = open(argv[1], O_RDONLY);
+	if (pipex->fin < 0)
 		exit(err_msg("Infile open error"));
-	pipex->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (pipex->outfile < 0)
+	pipex->fout = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (pipex->fout < 0)
 		exit(err_msg("Outfile open error"));
 	pipex->path = ft_split(search_path(envp), ':');
 	if (!pipex->path)
@@ -81,6 +81,6 @@ void	fd_closer(t_pipex *pipex)
 {
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
-	close(pipex->infile);
-	close(pipex->outfile);
+	close(pipex->fin);
+	close(pipex->fout);
 }
