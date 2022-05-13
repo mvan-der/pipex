@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 16:17:02 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 10:46:49 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	wait_status(pid_t process)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		status;
+	char	*newstr;
+	size_t	i;
+	size_t	j;
 
-	waitpid(process, &status, 0);
-	if (WEXITSTATUS(status))
-		exit(WEXITSTATUS(status));
+	if (!s1 || !s2)
+		return (NULL);
+	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (NULL);
+	i = ft_strlen(s1);
+	ft_strcpy(newstr, s1);
+	ft_strcpy(newstr + i, s2);
+	return (newstr);
 }
 
 static char	*search_path(char **envp)
@@ -38,37 +46,33 @@ void	env_path(t_pipex *pipex, char **envp)
 {
 	pipex->path = ft_split(search_path(envp), ':');
 	if (!pipex->path)
-		exit (EXIT_FAILURE);
+		err_msg("Split fail", EXIT_FAILURE);
 }
 
 char	*path_finder(t_pipex *pipex, char *command)
 {
 	char	*temp;
+	char	*binpath;
 
 	if (!command)
 		return (NULL);
 	if (access(command, X_OK) == 0)
 	{
-		temp = command;
+		binpath = command;
 		return (temp);
 	}
 	while (*pipex->path)
 	{
 		temp = ft_strjoin(*pipex->path, "/");
-		temp = ft_strjoin(temp, command);
 		if (!temp)
+			err_msg("Strjoin fail", EXIT_FAILURE);
+		binpath = ft_strjoin(temp, command);
+		free(temp);
+		if (!binpath)
 			err_msg("command fail", EXIT_FAILURE);
-		if (access(temp, X_OK) == 0)
-			return (temp);
+		if (access(binpath, X_OK) == 0)
+			return (binpath);
 		pipex->path++;
 	}
 	return (NULL);
-}
-
-void	parents(t_pipex *pipex)
-{
-	close(pipex->pipefd[0]);
-	close(pipex->pipefd[1]);
-	wait_status(pipex->first);
-	wait_status(pipex->second);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   gen_utils.c                                        :+:    :+:            */
+/*   str_utils.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/05 13:28:20 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/05 13:35:49 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 10:42:52 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		return (0);
 	check = ft_strlen(s);
 	dest = ft_calloc(sizeof(char), len + 1);
-	if (dest == 0)
-		return (0);
+	if (!dest)
+		return (NULL);
 	i = 0;
 	if (start > check)
 	{
@@ -72,33 +72,20 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+size_t	ft_strcpy(char *dest, char *src)
 {
-	char	*newstr;
 	size_t	i;
-	size_t	j;
 
-	if (!s1 || !s2)
-		return (0);
-	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!newstr)
-		return (0);
 	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
+	if (!src)
+		return (0);
+	while (src[i] != '\0')
 	{
-		newstr[j] = s1[i];
+		dest[i] = src[i];
 		i++;
-		j++;
 	}
-	i = 0;
-	while (s2[i] != '\0')
-	{
-		newstr[j] = s2[i];
-		i++;
-		j++;
-	}
-	return (newstr);
+	dest[i] = '\0';
+	return (i);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -116,5 +103,5 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			return (a[i] - b[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

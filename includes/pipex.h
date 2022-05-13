@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:27:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 16:15:47 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 10:43:39 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t	ft_strcpy(char *dest, char *src);
 
 #endif
