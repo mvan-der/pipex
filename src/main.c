@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 10:42:28 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 14:55:31 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	parents(t_pipex *pipex)
 {
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
-	wait_status(pipex->first);
 	wait_status(pipex->second);
+	wait_status(pipex->first);
 }
 
 int	err_msg(char *str, int exit_code)

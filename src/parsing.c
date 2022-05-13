@@ -6,19 +6,19 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 10:46:49 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 14:51:44 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*newstr;
 	size_t	i;
-	size_t	j;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -51,7 +51,6 @@ void	env_path(t_pipex *pipex, char **envp)
 
 char	*path_finder(t_pipex *pipex, char *command)
 {
-	char	*temp;
 	char	*binpath;
 
 	if (!command)
@@ -59,20 +58,19 @@ char	*path_finder(t_pipex *pipex, char *command)
 	if (access(command, X_OK) == 0)
 	{
 		binpath = command;
-		return (temp);
+		return (binpath);
 	}
 	while (*pipex->path)
 	{
-		temp = ft_strjoin(*pipex->path, "/");
-		if (!temp)
-			err_msg("Strjoin fail", EXIT_FAILURE);
-		binpath = ft_strjoin(temp, command);
-		free(temp);
+		binpath = ft_strjoin(*pipex->path, "/");
+		binpath = ft_strjoin(binpath, command);
 		if (!binpath)
 			err_msg("command fail", EXIT_FAILURE);
-		if (access(binpath, X_OK) == 0)
+		else if (access(binpath, X_OK) == 0)
 			return (binpath);
+		free(binpath);
 		pipex->path++;
-	}
+	}	
+	err_msg("Command not found", EXIT_FAILURE);
 	return (NULL);
 }

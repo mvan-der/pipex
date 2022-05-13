@@ -6,7 +6,7 @@
 #    By: mvan-der <mvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/26 11:48:58 by mvan-der      #+#    #+#                  #
-#    Updated: 2022/05/10 16:15:22 by mvan-der      ########   odam.nl          #
+#    Updated: 2022/05/13 14:20:21 by mvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CFLAGS = -Wall -Werror -Wextra -I includes
 
 SRCDIR = src/
 OBJDIR = obj/
-SRC = gen_utils.c ft_split.c main.c parsing.c pipex.c
+SRC = str_utils.c ft_split.c main.c parsing.c pipex.c
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 all: $(NAME)

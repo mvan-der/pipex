@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/05 13:28:20 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 10:42:52 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 12:31:06 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-size_t	ft_strcpy(char *dest, char *src)
+size_t	ft_strcpy(char *dest, const char *src)
 {
 	size_t	i;
 
@@ -103,5 +103,5 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			return (a[i] - b[i]);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
