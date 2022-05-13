@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 14:51:44 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/13 14:57:04 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*path_finder(t_pipex *pipex, char *command)
 		else if (access(binpath, X_OK) == 0)
 			return (binpath);
 		free(binpath);
+		binpath = NULL;
 		pipex->path++;
 	}	
 	err_msg("Command not found", EXIT_FAILURE);
