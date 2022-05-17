@@ -6,10 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/05 13:28:20 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 12:31:06 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/17 13:13:01 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
 #include <stdlib.h>
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -24,7 +25,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	}
 	ptr = malloc(nmemb * size);
 	if (!ptr)
-		return (NULL);
+		err_msg("Malloc fail", EXIT_FAILURE);
 	i = 0;
 	while (i < (nmemb * size))
 	{

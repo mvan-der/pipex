@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 14:47:13 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/17 12:46:11 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_command(t_pipex *pipex, char *argv)
 		err_msg("Split fail", EXIT_FAILURE);
 	binpath = path_finder(pipex, command[0]);
 	if (!binpath)
-		err_msg("Path fail", EXIT_FAILURE);
+		err_msg("Command not found", 127);
 	execve(binpath, command, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);

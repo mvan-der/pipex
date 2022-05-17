@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/07 16:18:32 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/10 12:50:10 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/17 13:13:56 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	char	**result;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	result = ft_calloc(sizeof(char *), (ft_cnt_str(s, c) + 1));
 	if (!result)
 		return (NULL);

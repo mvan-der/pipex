@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/13 14:57:04 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/17 13:13:30 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ void	env_path(t_pipex *pipex, char **envp)
 {
 	pipex->path = ft_split(search_path(envp), ':');
 	if (!pipex->path)
-		err_msg("Split fail", EXIT_FAILURE);
+		err_msg("No path", EXIT_FAILURE);
 }
 
 char	*path_finder(t_pipex *pipex, char *command)
 {
 	char	*binpath;
+	char	*temp;
 
 	if (!command)
 		return (NULL);
@@ -62,16 +63,17 @@ char	*path_finder(t_pipex *pipex, char *command)
 	}
 	while (*pipex->path)
 	{
-		binpath = ft_strjoin(*pipex->path, "/");
-		binpath = ft_strjoin(binpath, command);
+		temp = ft_strjoin(*pipex->path, "/");
+		binpath = ft_strjoin(temp, command);
 		if (!binpath)
 			err_msg("command fail", EXIT_FAILURE);
 		else if (access(binpath, X_OK) == 0)
 			return (binpath);
 		free(binpath);
+		free(temp);
 		binpath = NULL;
+		temp = NULL;
 		pipex->path++;
-	}	
-	err_msg("Command not found", EXIT_FAILURE);
-	return (NULL);
+	}
+	return (binpath);
 }
