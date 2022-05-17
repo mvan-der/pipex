@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/17 13:13:30 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/17 15:26:25 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*search_path(char **envp)
 {
 	while (*envp)
 	{
-		if (!ft_strncmp(*envp, "PATH", 4))
+		if (!ft_strncmp(*envp, "PATH=", 5))
 			return (*envp + 5);
 		envp++;
 	}
