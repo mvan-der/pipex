@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/17 15:26:25 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/31 16:03:06 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ static char	*search_path(char **envp)
 
 void	env_path(t_pipex *pipex, char **envp)
 {
-	pipex->path = ft_split(search_path(envp), ':');
+	char	*placeholder;
+
+	placeholder = search_path(envp);
+	if (!placeholder)
+		return ;
+	pipex->path = ft_split(placeholder, ':');
 	if (!pipex->path)
 		err_msg("No path", EXIT_FAILURE);
 }
@@ -57,10 +62,7 @@ char	*path_finder(t_pipex *pipex, char *command)
 	if (!command)
 		return (NULL);
 	if (access(command, X_OK) == 0)
-	{
-		binpath = command;
-		return (binpath);
-	}
+		return (command);
 	while (*pipex->path)
 	{
 		temp = ft_strjoin(*pipex->path, "/");
