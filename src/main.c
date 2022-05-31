@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:28:25 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/17 13:06:39 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/05/31 10:25:58 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	input_check(int argc)
 {
 	if (argc != 5)
 	{
-		write(1, ARG_FAIL, 50);
+		write(STDOUT_FILENO, ARG_FAIL, ft_strlen(ARG_FAIL));
 		exit(EXIT_FAILURE);
 	}
 }
