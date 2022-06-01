@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:45:11 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/31 16:03:06 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/06/01 11:58:08 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 #include <unistd.h>
 #include <stdio.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*newstr;
-	size_t	i;
+	unsigned char	*a;
+	unsigned char	*b;
+	size_t			i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!newstr)
-		return (NULL);
-	i = ft_strlen(s1);
-	ft_strcpy(newstr, s1);
-	ft_strcpy(newstr + i, s2);
-	return (newstr);
+	a = (unsigned char *)s1;
+	b = (unsigned char *)s2;
+	i = 0;
+	while ((a[i] != '\0' || b[i] != '\0') && i < n)
+	{
+		if (a[i] != b[i])
+			return (a[i] - b[i]);
+		i++;
+	}
+	return (0);
 }
 
 static char	*search_path(char **envp)
@@ -44,12 +46,12 @@ static char	*search_path(char **envp)
 
 void	env_path(t_pipex *pipex, char **envp)
 {
-	char	*placeholder;
+	char	*path_temp;
 
-	placeholder = search_path(envp);
-	if (!placeholder)
+	path_temp = search_path(envp);
+	if (!path_temp)
 		return ;
-	pipex->path = ft_split(placeholder, ':');
+	pipex->path = ft_split(path_temp, ':');
 	if (!pipex->path)
 		err_msg("No path", EXIT_FAILURE);
 }
@@ -61,14 +63,14 @@ char	*path_finder(t_pipex *pipex, char *command)
 
 	if (!command)
 		return (NULL);
-	if (access(command, X_OK) == 0)
+	else if (access(command, X_OK) == 0)
 		return (command);
 	while (*pipex->path)
 	{
 		temp = ft_strjoin(*pipex->path, "/");
 		binpath = ft_strjoin(temp, command);
 		if (!binpath)
-			err_msg("command fail", EXIT_FAILURE);
+			err_msg("Path fail", EXIT_FAILURE);
 		else if (access(binpath, X_OK) == 0)
 			return (binpath);
 		free(binpath);

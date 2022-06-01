@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/05/17 12:46:11 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/06/01 12:07:45 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+static void comm_fail(char *command)
+{
+	write(2, COMM_ERR, ft_strlen(COMM_ERR));
+	write(2, command, ft_strlen(command));
+	write(2, "\n", 1);
+	exit(127);
+}
 
 void	execute_command(t_pipex *pipex, char *argv)
 {
@@ -26,10 +34,9 @@ void	execute_command(t_pipex *pipex, char *argv)
 		err_msg("Split fail", EXIT_FAILURE);
 	binpath = path_finder(pipex, command[0]);
 	if (!binpath)
-		err_msg("Command not found", 127);
+		comm_fail(command[0]);
 	execve(binpath, command, NULL);
-	perror("execve");
-	exit(EXIT_FAILURE);
+	err_msg("execve failed: ", EXIT_FAILURE);
 }
 
 void	first_command(t_pipex *pipex, char *file, char *argv)
