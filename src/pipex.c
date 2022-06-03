@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 13:43:36 by mvan-der      #+#    #+#                 */
-/*   Updated: 2022/06/01 12:07:45 by mvan-der      ########   odam.nl         */
+/*   Updated: 2022/06/03 11:18:47 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void comm_fail(char *command)
+static void	command_fail(char *command)
 {
 	write(2, COMM_ERR, ft_strlen(COMM_ERR));
 	write(2, command, ft_strlen(command));
@@ -34,7 +34,7 @@ void	execute_command(t_pipex *pipex, char *argv)
 		err_msg("Split fail", EXIT_FAILURE);
 	binpath = path_finder(pipex, command[0]);
 	if (!binpath)
-		comm_fail(command[0]);
+		command_fail(command[0]);
 	execve(binpath, command, NULL);
 	err_msg("execve failed: ", EXIT_FAILURE);
 }
